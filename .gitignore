@@ -2,3 +2,8 @@
 
 out/
 
+# files
+
+*.xlsx
+src/com/nyarstot/nettop/backend/new.pl
+
