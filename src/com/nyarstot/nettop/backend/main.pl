@@ -6,6 +6,8 @@
 
 /* BASIC FUNCTIONS */
 
+:- initialization(start_system).
+
 intro_message:-
     sleep(0.2),
     write('                             NETTOP EXPERT SYSTEM                       '), nl,
@@ -29,14 +31,16 @@ reset_answers.
 start_system:-
     intro_message,
     reset_answers,
-    find_topology(Topology),
+    find_topology(Topology), nl,
+    progress(cable_type, T), run_calculator(T, Price),
     write('You probably looking for: '),
-    describe(Topology), nl.
+    describe(Topology), nl, nl, nl,
+    write('Estimated price: '), write(Price), write('$'), nl, nl, nl.
 
 ask(Question, Answer, Choices):-
     question(Question),
     answers(Choices, 0),
-    read(Index),
+    write('Answer:> '), read(Index),
     parse(Index, Choices, Response),
     asserta(progress(Question, Response)),
     Response = Answer.
@@ -44,12 +48,21 @@ ask(Question, Answer, Choices):-
 /* RULES FOR THE KNOWLEDGE BASE */
 
 topology(peer_to_peer):-
-    why(home).
+    what(home),
+    connection(each_other),
+    expansion(no),
+    cable_type(twisted).
 
 /* QUESTIONS FOR THE KNOWLEDGE BASE */
 
-question(why):-
+question(what):-
     write('What type of network suits your needs?'), nl.
+question(connection):-
+    write('Choose your type of connection'), nl.
+question(expansion):-
+    write('Are you going to expand your network in the future?'), nl.
+question(cable_type):-
+    write('What type of cable you wish to have?'), nl.
 
 /* ANSWERS FOR THE KNOWLEDGE BASE */
 
@@ -62,6 +75,23 @@ answer(compute):-
 answer(classroom):-
     write('Classroom network').
 
+answer(central_server):-
+    write('Central server').
+answer(each_other):-
+    write('To each other').
+
+answer(yes):-
+    write('Yes').
+answer(no):-
+    write('No').
+
+answer(coaxial):-
+    write('Coaxial cable').
+answer(twisted):-
+    write('Twisted pair cable').
+answer(optical):-
+    write('Optical cable').
+
 /* TOPOLOGY DESCRIPTIONS */
 
 describe(peer_to_peer):-
@@ -70,13 +100,32 @@ describe(peer_to_peer):-
 
 /* ASSIGN AN ANSWER TO QUESTIONS FROM THE KNOWLEDGE BASE */
 
-why(Answer):-
-    progress(why, Answer).
-why(Answer):-
-    \+ progress(why,_),
-    ask(why, Answer, [home, corporate, compute, classroom]).
+what(Answer):-
+    progress(what, Answer).
+what(Answer):-
+    \+ progress(what,_),
+    ask(what, Answer, [home, corporate, compute, classroom]).
+
+connection(Answer):-
+    progress(connection, Answer).
+connection(Answer):-
+    \+ progress(connection,_),
+    ask(connection, Answer, [central_server, each_other]).
+
+expansion(Answer):-
+    progress(expansion, Answer).
+expansion(Answer):-
+    \+ progress(expansion,_),
+    ask(expansion, Answer, [yes, no]).
+
+cable_type(Answer):-
+    progress(cable_type, Answer).
+cable_type(Answer):-
+    \+ progress(cable_type,_),
+    ask(cable_type, Answer, [coaxial, twisted, optical]).
 
 /* ANSWER OUTPUT */
+
 answers([],_).
 answers([First|Rest], Index):-
     write('['), write(Index), write(']'), write(' '), answer(First), nl,
@@ -88,3 +137,25 @@ parse(Index, [First|Rest], Response):-
     Index > 0,
     NextIndex is Index - 1,
     parse(NextIndex, Rest, Response).
+
+/* CALCULATOR */
+
+run_calculator(Cable, Answer):-
+    write('Measure the length of the walls along which the network cable is going to be laid, how many meters did you get in total?'), nl,
+    write('Answer:> '), read(Meters), nl,
+    write('How many compputers you going to network?'), nl,
+    write('Answer:> '), read(Amount), nl,
+    calculate(Cable, Meters, Amount, A), Answer = A,
+    write(Answer), nl.
+
+calculate(Cable, Meters, Amount, Answer):-
+    M = (Meters + (Amount*2)),
+    (Cable = twisted
+    ->
+        Answer is M * 0.43;
+        Cable = coaxial
+        ->
+            Answer is M * 0.56;
+            Answer is M * 0.76
+    ).
+
