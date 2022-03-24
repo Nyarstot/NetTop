@@ -8,6 +8,8 @@
 
 :- initialization(start_system).
 
+:- consult('database/include.pl').
+
 intro_message:-
     sleep(0.2),
     write('                             NETTOP EXPERT SYSTEM                       '), nl,
@@ -53,76 +55,11 @@ topology(peer_to_peer):-
     expansion(no),
     cable_type(twisted).
 
-/* QUESTIONS FOR THE KNOWLEDGE BASE */
-
-question(what):-
-    write('What type of network suits your needs?'), nl.
-question(connection):-
-    write('Choose your type of connection'), nl.
-question(expansion):-
-    write('Are you going to expand your network in the future?'), nl.
-question(cable_type):-
-    write('What type of cable you wish to have?'), nl.
-
-/* ANSWERS FOR THE KNOWLEDGE BASE */
-
-answer(home):-
-    write('Home network').
-answer(corporate):-
-    write('Corporate network').
-answer(compute):-
-    write('Computing network').
-answer(classroom):-
-    write('Classroom network').
-
-answer(central_server):-
-    write('Central server').
-answer(each_other):-
-    write('To each other').
-
-answer(yes):-
-    write('Yes').
-answer(no):-
-    write('No').
-
-answer(coaxial):-
-    write('Coaxial cable').
-answer(twisted):-
-    write('Twisted pair cable').
-answer(optical):-
-    write('Optical cable').
-
 /* TOPOLOGY DESCRIPTIONS */
 
 describe(peer_to_peer):-
     write('Peer to peer network'), nl,
     write('This is a simple type of network where computers are able to communicate with one another and share what is on or attached to their computer with other users.').
-
-/* ASSIGN AN ANSWER TO QUESTIONS FROM THE KNOWLEDGE BASE */
-
-what(Answer):-
-    progress(what, Answer).
-what(Answer):-
-    \+ progress(what,_),
-    ask(what, Answer, [home, corporate, compute, classroom]).
-
-connection(Answer):-
-    progress(connection, Answer).
-connection(Answer):-
-    \+ progress(connection,_),
-    ask(connection, Answer, [central_server, each_other]).
-
-expansion(Answer):-
-    progress(expansion, Answer).
-expansion(Answer):-
-    \+ progress(expansion,_),
-    ask(expansion, Answer, [yes, no]).
-
-cable_type(Answer):-
-    progress(cable_type, Answer).
-cable_type(Answer):-
-    \+ progress(cable_type,_),
-    ask(cable_type, Answer, [coaxial, twisted, optical]).
 
 /* ANSWER OUTPUT */
 
