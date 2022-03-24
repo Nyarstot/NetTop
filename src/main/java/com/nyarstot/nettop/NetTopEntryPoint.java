@@ -1,4 +1,4 @@
-package com.nyarstot.nettop;
+package main.java.com.nyarstot.nettop;
 
 public class NetTopEntryPoint {
     public static void main(String[] args) {

@@ -1,9 +1,9 @@
 # directories
 
 out/
+/src/test/java/
 
 # files
 
 *.xlsx
-src/com/nyarstot/nettop/backend/new.pl
-
+src/main/prolog/com/nyarstot/nettop/new.pl
