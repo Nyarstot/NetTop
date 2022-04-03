@@ -1,6 +1,7 @@
-package main.java.com.nyarstot.nettop;
+package com.nyarstot.Nettop;
 
-public class NetTopEntryPoint {
+public class NTEntryPoint {
+
     public static void main(String[] args) {
         try {
             start();
@@ -11,6 +12,7 @@ public class NetTopEntryPoint {
     }
 
     public static void start() {
-        NetTopGUI netTopGui = new NetTopGUI();
+        NTMainWindow mainWindow = new NTMainWindow();
     }
+
 }

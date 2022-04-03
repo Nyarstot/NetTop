@@ -7,7 +7,6 @@
 /* BASIC FUNCTIONS */
 
 :- initialization(start_system).
-
 :- consult('database/include.pl').
 
 intro_message:-
@@ -70,7 +69,7 @@ answers([First|Rest], Index):-
     answers(Rest, NextIndex).
 
 parse(0, [First|_], First).
-parse(Index, [First|Rest], Response):-
+parse(Index, [_|Rest], Response):-
     Index > 0,
     NextIndex is Index - 1,
     parse(NextIndex, Rest, Response).

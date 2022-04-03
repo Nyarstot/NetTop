@@ -4,13 +4,35 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>groupId</groupId>
-    <artifactId>NetTop</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>org.nyarstot</groupId>
+    <artifactId>Nettop</artifactId>
+    <version>0.1.0</version>
+    <name>Nettop</name>
 
     <properties>
         <maven.compiler.source>16</maven.compiler.source>
         <maven.compiler.target>16</maven.compiler.target>
     </properties>
-    
+
+    <dependencies>
+
+        <!-- JGRAPHX -->
+        <dependency>
+            <groupId>com.github.vlsi.mxgraph</groupId>
+            <artifactId>jgraphx</artifactId>
+            <version>4.2.2</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <!-- JGRAPHT -->
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht</artifactId>
+            <version>1.5.1</version>
+            <type>pom</type>
+            <scope>compile</scope>
+        </dependency>
+
+    </dependencies>
+
 </project>
