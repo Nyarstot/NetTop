@@ -27,9 +27,15 @@
         <!-- JGRAPHT -->
         <dependency>
             <groupId>org.jgrapht</groupId>
-            <artifactId>jgrapht</artifactId>
-            <version>1.5.1</version>
-            <type>pom</type>
+            <artifactId>jgrapht-core</artifactId>
+            <version>1.5.0</version>
+            <scope>compile</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>org.jgrapht</groupId>
+            <artifactId>jgrapht-ext</artifactId>
+            <version>1.5.0</version>
             <scope>compile</scope>
         </dependency>
 
